@@ -1,27 +1,73 @@
-// Simulador: Calculadora de presupuesto para la realización de un proyecto
- 
-let cantidadHoras = prompt("Para saber el costo de su programa primero deberá ingresar la cantidad de horas:");
-let tipoLenguaje = prompt("Tipo de Lenguaje: -C/C++ ingrese C -C# ingrese # -Phyton ingrese P -Go ingrese G");
-let urgente = prompt("Si su programa es requerido con URGENCIA ingrese 1, de lo contrario, ingrese 0");
-let costoTotal;	
-	
-	switch(tipoLenguaje) {
-	case "C": 
-		costoTotal = cantidadHoras*7500; 
-		break;
-	case "#": 
-		costoTotal = cantidadHoras*6100; 
-		break;
-	case "P": 
-		costoTotal = cantidadHoras*5400; 
-		break;
-	case "G": 
-		costoTotal = cantidadHoras*5000;
-		break;
-	}
-	
-	if (urgente == 1) {
-		costoTotal= costoTotal+(costoTotal*0.2); 
-	}
-	
-	alert ("El importe de su proyecto es de: $" +costoTotal); 
+// Simulador de presupuesto para desarrollo de software
+
+let continuar;
+
+do {
+    let cantidadHoras = Number(
+        prompt("Ingrese la cantidad de horas estimadas para el proyecto:")
+    );
+
+    let tipoLenguaje = prompt(
+        "Ingrese el lenguaje utilizado:\n" +
+        "C = C/C++\n" +
+        "# = C#\n" +
+        "P = Python\n" +
+        "G = Go"
+    ).toUpperCase();
+
+    let urgente = prompt(
+        "¿El proyecto es urgente? Responda SI o NO"
+    ).toUpperCase();
+
+    let precioHora;
+
+    if (tipoLenguaje === "C") {
+        precioHora = 8000;
+    } else if (tipoLenguaje === "#") {
+        precioHora = 10000;
+    } else if (tipoLenguaje === "P") {
+        precioHora = 9000;
+    } else if (tipoLenguaje === "G") {
+        precioHora = 12000;
+    } else {
+        precioHora = 0;
+    }
+
+
+    if (precioHora === 0) {
+        console.log("El lenguaje ingresado no es válido.");
+    } else if (cantidadHoras <= 0) {
+        console.log("La cantidad de horas debe ser mayor a 0.");
+    } else {
+
+        let subtotal = cantidadHoras * precioHora;
+        let recargo = 0;
+
+        if (urgente === "SI") {
+            recargo = subtotal * 0.20;
+        } else if (urgente === "NO") {
+            recargo = 0;
+        } else {
+            console.log("La opción de urgencia no es válida.");
+        }
+
+        let total = subtotal + recargo;
+
+    alert(
+    "----- PRESUPUESTO -----\n" +
+    "Horas estimadas: " + cantidadHoras + "\n" +
+    "Lenguaje: " + tipoLenguaje + "\n" +
+    "Precio por hora: $" + precioHora + "\n" +
+    "Subtotal: $" + subtotal + "\n" +
+    "Recargo por urgencia: $" + recargo + "\n" +
+    "TOTAL: $" + total
+);
+    }
+
+    continuar = prompt(
+        "¿Desea calcular otro presupuesto? SI / NO"
+    ).toUpperCase();
+
+} while (continuar === "SI");
+
+console.log("Gracias por utilizar el simulador de presupuestos.");
